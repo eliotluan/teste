@@ -2,69 +2,120 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Botão Fugitivo</title>
+  <title>Pedido Fofo</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background-color: #f0f0f0;
-      position: relative;
+      background-color: #fff0f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
     }
 
-    #botao-nao {
-      position: absolute;
+    .container {
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: #d63384;
+    }
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    button {
       padding: 15px 30px;
       font-size: 20px;
-      background-color: red;
-      color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
+    #botao-sim {
+      background-color: #28a745;
+      color: white;
+      z-index: 2;
+    }
+
+    #botao-nao {
+      position: absolute;
+      background-color: #dc3545;
+      color: white;
+      z-index: 1;
+    }
+
+    #mensagem {
+      margin-top: 30px;
+      font-size: 1.8rem;
+      color: #ff69b4;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
   </style>
 </head>
 <body>
 
-  <button id="botao-nao">não</button>
+  <div class="container">
+    <h1>Namora comigo?</h1>
+    <div class="botoes">
+      <button id="botao-sim">sim</button>
+      <button id="botao-nao">não</button>
+    </div>
+    <div id="mensagem"></div>
+  </div>
 
   <script>
-    const botao = document.getElementById('botao-nao');
+    const botaoNao = document.getElementById('botao-nao');
+    const botaoSim = document.getElementById('botao-sim');
+    const mensagem = document.getElementById('mensagem');
 
-    // Função para posicionar o botão no centro ao carregar
-    function centralizarBotao() {
-      const larguraJanela = window.innerWidth;
-      const alturaJanela = window.innerHeight;
-      const larguraBotao = botao.offsetWidth;
-      const alturaBotao = botao.offsetHeight;
-
-      botao.style.left = (larguraJanela - larguraBotao) / 2 + 'px';
-      botao.style.top = (alturaJanela - alturaBotao) / 2 + 'px';
-    }
-
-    // Função para mover o botão para posição aleatória
     function moverBotao() {
       const larguraJanela = window.innerWidth;
       const alturaJanela = window.innerHeight;
-      const larguraBotao = botao.offsetWidth;
-      const alturaBotao = botao.offsetHeight;
+      const larguraBotao = botaoNao.offsetWidth;
+      const alturaBotao = botaoNao.offsetHeight;
 
       const novaEsquerda = Math.random() * (larguraJanela - larguraBotao);
       const novoTopo = Math.random() * (alturaJanela - alturaBotao);
 
-      botao.style.left = novaEsquerda + 'px';
-      botao.style.top = novoTopo + 'px';
+      botaoNao.style.left = novaEsquerda + 'px';
+      botaoNao.style.top = novoTopo + 'px';
     }
 
-    // Inicializa no centro
-    centralizarBotao();
+    botaoNao.addEventListener('click', moverBotao);
 
-    // Adiciona o evento de clique
-    botao.addEventListener('click', moverBotao);
+    botaoSim.addEventListener('click', () => {
+      mensagem.innerHTML = "Awnnn, eu também te amo! 💖💑";
+      mensagem.style.opacity = '1';
+    });
 
-    // Re-centraliza se a janela for redimensionada
-    window.addEventListener('resize', centralizarBotao);
+    // Inicializa posição do botão "não"
+    window.onload = () => {
+      const botoesDiv = document.querySelector('.botoes');
+      const botoesRect = botoesDiv.getBoundingClientRect();
+      const botaoNaoRect = botaoNao.getBoundingClientRect();
+
+      botaoNao.style.left = botoesRect.left + botaoSim.offsetWidth + 20 + 'px';
+      botaoNao.style.top = botoesRect.top + 'px';
+    };
   </script>
 
 </body>
