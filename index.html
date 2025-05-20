@@ -30,7 +30,6 @@
       display: flex;
       justify-content: center;
       gap: 20px;
-      position: relative;
     }
 
     button {
@@ -45,14 +44,12 @@
     #botao-sim {
       background-color: #28a745;
       color: white;
-      z-index: 2;
     }
 
     #botao-nao {
-      position: absolute;
       background-color: #dc3545;
       color: white;
-      z-index: 1;
+      position: absolute;
     }
 
     #mensagem {
@@ -77,8 +74,8 @@
     <h1>Namora comigo?</h1>
     <div class="botoes">
       <button id="botao-sim">sim</button>
-      <button id="botao-nao">não</button>
     </div>
+    <button id="botao-nao">não</button>
     <div id="mensagem"></div>
   </div>
 
@@ -107,14 +104,12 @@
       mensagem.style.opacity = '1';
     });
 
-    // Inicializa posição do botão "não"
+    // Posição inicial do botão "não" ao lado do "sim"
     window.onload = () => {
-      const botoesDiv = document.querySelector('.botoes');
-      const botoesRect = botoesDiv.getBoundingClientRect();
-      const botaoNaoRect = botaoNao.getBoundingClientRect();
+      const simRect = botaoSim.getBoundingClientRect();
 
-      botaoNao.style.left = botoesRect.left + botaoSim.offsetWidth + 20 + 'px';
-      botaoNao.style.top = botoesRect.top + 'px';
+      botaoNao.style.left = (simRect.right + 20) + 'px';
+      botaoNao.style.top = simRect.top + 'px';
     };
   </script>
 
