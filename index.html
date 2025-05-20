@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Botão Fugitivo</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #f0f0f0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #botao-nao {
+      position: absolute;
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="botao-nao">não</button>
+
+  <script>
+    const botao = document.getElementById('botao-nao');
+
+    // Função para posicionar o botão no centro ao carregar
+    function centralizarBotao() {
+      const larguraJanela = window.innerWidth;
+      const alturaJanela = window.innerHeight;
+      const larguraBotao = botao.offsetWidth;
+      const alturaBotao = botao.offsetHeight;
+
+      botao.style.left = (larguraJanela - larguraBotao) / 2 + 'px';
+      botao.style.top = (alturaJanela - alturaBotao) / 2 + 'px';
+    }
+
+    // Função para mover o botão para posição aleatória
+    function moverBotao() {
+      const larguraJanela = window.innerWidth;
+      const alturaJanela = window.innerHeight;
+      const larguraBotao = botao.offsetWidth;
+      const alturaBotao = botao.offsetHeight;
+
+      const novaEsquerda = Math.random() * (larguraJanela - larguraBotao);
+      const novoTopo = Math.random() * (alturaJanela - alturaBotao);
+
+      botao.style.left = novaEsquerda + 'px';
+      botao.style.top = novoTopo + 'px';
+    }
+
+    // Inicializa no centro
+    centralizarBotao();
+
+    // Adiciona o evento de clique
+    botao.addEventListener('click', moverBotao);
+
+    // Re-centraliza se a janela for redimensionada
+    window.addEventListener('resize', centralizarBotao);
+  </script>
+
+</body>
+</html>
