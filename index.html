@@ -90,8 +90,12 @@
       const larguraBotao = botaoNao.offsetWidth;
       const alturaBotao = botaoNao.offsetHeight;
 
-      const novaEsquerda = Math.random() * (larguraJanela - larguraBotao);
-      const novoTopo = Math.random() * (alturaJanela - alturaBotao);
+      // Calcula os limites para garantir que o botão fique dentro da tela
+      const maxEsquerda = larguraJanela - larguraBotao;
+      const maxTopo = alturaJanela - alturaBotao;
+
+      const novaEsquerda = Math.random() * maxEsquerda;
+      const novoTopo = Math.random() * maxTopo;
 
       botaoNao.style.left = novaEsquerda + 'px';
       botaoNao.style.top = novoTopo + 'px';
@@ -104,12 +108,25 @@
       mensagem.style.opacity = '1';
     });
 
-    // Posição inicial do botão "não" ao lado do "sim"
+    // Posiciona o botão "não" corretamente no início
     window.onload = () => {
       const simRect = botaoSim.getBoundingClientRect();
+      const larguraBotao = botaoNao.offsetWidth;
+      const alturaBotao = botaoNao.offsetHeight;
 
-      botaoNao.style.left = (simRect.right + 20) + 'px';
-      botaoNao.style.top = simRect.top + 'px';
+      let esquerda = simRect.right + 20;
+      let topo = simRect.top;
+
+      // Garante que ele comece visível na tela
+      if (esquerda + larguraBotao > window.innerWidth) {
+        esquerda = window.innerWidth - larguraBotao - 10;
+      }
+      if (topo + alturaBotao > window.innerHeight) {
+        topo = window.innerHeight - alturaBotao - 10;
+      }
+
+      botaoNao.style.left = esquerda + 'px';
+      botaoNao.style.top = topo + 'px';
     };
   </script>
 
