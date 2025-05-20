@@ -27,9 +27,9 @@
     }
 
     .botoes {
-      display: flex;
-      justify-content: center;
+      display: inline-flex;
       gap: 20px;
+      position: relative;
     }
 
     button {
@@ -44,12 +44,16 @@
     #botao-sim {
       background-color: #28a745;
       color: white;
+      z-index: 2;
     }
 
     #botao-nao {
       background-color: #dc3545;
       color: white;
       position: absolute;
+      top: 0;
+      left: calc(100% + 20px); /* ao lado do botão "sim" inicialmente */
+      z-index: 1;
     }
 
     #mensagem {
@@ -74,8 +78,8 @@
     <h1>Namora comigo?</h1>
     <div class="botoes">
       <button id="botao-sim">sim</button>
+      <button id="botao-nao">não</button>
     </div>
-    <button id="botao-nao">não</button>
     <div id="mensagem"></div>
   </div>
 
@@ -90,13 +94,13 @@
       const larguraBotao = botaoNao.offsetWidth;
       const alturaBotao = botaoNao.offsetHeight;
 
-      // Calcula os limites para garantir que o botão fique dentro da tela
-      const maxEsquerda = larguraJanela - larguraBotao;
-      const maxTopo = alturaJanela - alturaBotao;
+      const maxLeft = larguraJanela - larguraBotao - 10;
+      const maxTop = alturaJanela - alturaBotao - 10;
 
-      const novaEsquerda = Math.random() * maxEsquerda;
-      const novoTopo = Math.random() * maxTopo;
+      const novaEsquerda = Math.random() * maxLeft;
+      const novoTopo = Math.random() * maxTop;
 
+      botaoNao.style.position = 'fixed'; // Garante que respeita a viewport
       botaoNao.style.left = novaEsquerda + 'px';
       botaoNao.style.top = novoTopo + 'px';
     }
@@ -107,27 +111,6 @@
       mensagem.innerHTML = "Awnnn, eu também te amo! 💖💑";
       mensagem.style.opacity = '1';
     });
-
-    // Posiciona o botão "não" corretamente no início
-    window.onload = () => {
-      const simRect = botaoSim.getBoundingClientRect();
-      const larguraBotao = botaoNao.offsetWidth;
-      const alturaBotao = botaoNao.offsetHeight;
-
-      let esquerda = simRect.right + 20;
-      let topo = simRect.top;
-
-      // Garante que ele comece visível na tela
-      if (esquerda + larguraBotao > window.innerWidth) {
-        esquerda = window.innerWidth - larguraBotao - 10;
-      }
-      if (topo + alturaBotao > window.innerHeight) {
-        topo = window.innerHeight - alturaBotao - 10;
-      }
-
-      botaoNao.style.left = esquerda + 'px';
-      botaoNao.style.top = topo + 'px';
-    };
   </script>
 
 </body>
